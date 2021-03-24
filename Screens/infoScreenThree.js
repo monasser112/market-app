@@ -1,11 +1,10 @@
 import React from "react";
-import { Text, StyleSheet, View } from "react-native";
 import Intro from "../Components/Intro";
+import { StyleSheet, Text, View } from "react-native";
 
-const infoScreenTwo = ({ navigation }) => {
-  const img = require("../assets/Truck.png");
-  const dotsImg = require("../assets/ThreeDots-s.png");
-
+const infoScreenThree = ({ navigation }) => {
+  const img = require("../assets/Like.png");
+  const dotsImg = require("../assets/ThreeDots-t.png");
   return (
     <View style={styles.container}>
       <Intro
@@ -24,4 +23,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default infoScreenTwo;
+export default infoScreenThree;

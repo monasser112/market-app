@@ -3,7 +3,7 @@ import { StyleSheet, View, Text, Image } from "react-native";
 
 const HomeScreen = ({ navigation }) => {
   setTimeout(() => {
-    navigation.navigate("Intro");
+    navigation.navigate("IntroOne");
   }, 3000);
   return (
     <View style={styles.backgroundStyle}>

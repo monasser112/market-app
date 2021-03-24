@@ -1,23 +1,21 @@
 import React from "react";
-import { StyleSheet, Text, View, Image } from "react-native";
+import { StyleSheet, Text, View, Image, TouchableOpacity } from "react-native";
 import { AntDesign } from "@expo/vector-icons";
 
-const Intro = () => {
+const Intro = ({ navigation, screenName, img, dotsImg }) => {
   return (
     <>
       <View style={styles.Container}>
-        <Image source={require("../assets/first.png")} />
+        <Image source={img} />
         <Text style={styles.Title}>Lorem ipsum</Text>
         <Text style={styles.paragraphStyle}>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam pretium
-          imperdiet dolor, condimentum elementum sem. Pellentesque finibus augue
-          nibh
+          Amet in id commodo excepteur do do id sunt. In consectetur pariatur
+          anim minim irure aute occaecat esse excepteur. Ad quis mollit sit
         </Text>
-        <Image
-          style={{ marginTop: 50 }}
-          source={require("../assets/ThreeDots-f.png")}
-        />
+        <Image style={{ marginTop: "12%" }} source={dotsImg} />
+
         <AntDesign
+          onPress={() => navigation.navigate(screenName)}
           style={styles.iconStyle}
           name="rightcircle"
           size={44}
