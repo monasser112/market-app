@@ -4,6 +4,7 @@ import HomeScreen from "./Screens/HomeScreen";
 import InfoScreenOne from "./Screens/infoScreenOne";
 import InfoScreenTwo from "./Screens/infoScreenTwo";
 import InfoScreenThree from "./Screens/infoScreenThree";
+import ProductsScreen from "./Screens/ProductScreen";
 
 import { StyleSheet, View } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
@@ -33,6 +34,11 @@ export default function App() {
           name="IntroThree"
           options={{ headerShown: false }}
           component={InfoScreenThree}
+        />
+        <Stack.Screen
+          name="Product"
+          options={{ headerShown: false }}
+          component={ProductsScreen}
         />
       </Stack.Navigator>
     </NavigationContainer>

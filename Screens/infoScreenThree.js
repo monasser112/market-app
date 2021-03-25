@@ -11,7 +11,7 @@ const infoScreenThree = ({ navigation }) => {
         navigation={navigation}
         img={img}
         dotsImg={dotsImg}
-        screenName="IntroThree"
+        screenName="Product"
       />
     </View>
   );
