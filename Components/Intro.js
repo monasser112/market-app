@@ -1,8 +1,18 @@
 import React from "react";
 import { StyleSheet, Text, View, Image, TouchableOpacity } from "react-native";
 import { AntDesign } from "@expo/vector-icons";
+import { useFonts } from "expo-font";
 
 const Intro = ({ navigation, screenName, img, dotsImg }) => {
+  const [loaded] = useFonts({
+    Poppins: require("../assets/fonts/Poppins-Medium.ttf"),
+    Poppins_Light: require("../assets/fonts/Poppins-Light.ttf"),
+    Poppins_Regular: require("../assets/fonts/Poppins-Regular.ttf"),
+  });
+
+  if (!loaded) {
+    return null;
+  }
   return (
     <>
       <View style={styles.Container}>
@@ -42,11 +52,13 @@ const styles = StyleSheet.create({
   Title: {
     color: "#2E2E2E",
     marginVertical: 30,
+    fontFamily: "Poppins",
     fontSize: 30,
   },
   paragraphStyle: {
     color: "#2E2E2E",
     paddingHorizontal: 30,
+    fontFamily: "Poppins_Light",
     fontSize: 15,
   },
   iconStyle: {

@@ -1,6 +1,7 @@
 import React from "react";
 import Intro from "../Components/Intro";
 import { View, Text, StyleSheet } from "react-native";
+import { useFonts } from "expo-font";
 
 const infoScreenOne = ({ navigation }) => {
   const img = require("../assets/first.png");

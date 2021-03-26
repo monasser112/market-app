@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Header } from "react-native-elements";
 import SearchBar from "../Components/SearchBar";
 import { AntDesign } from "@expo/vector-icons";
+
 import {
   StyleSheet,
   Text,
@@ -31,7 +32,6 @@ const ProductsScreen = ({ navigation }) => {
     let newFilteredResponse = { ...filteredResponse };
     newFilteredResponse = newFilteredResponse["0"].products;
     console.log(newFilteredResponse);
-    //filteredResponse = filteredResponse.products;
     setSearchResults(newFilteredResponse);
   };
 
@@ -39,7 +39,6 @@ const ProductsScreen = ({ navigation }) => {
     const response = await axios.get(
       `https://5bcce576cf2e850013874767.mockapi.io/task/categories`
     );
-    //console.log(response.data);
     setCategory(response.data);
   };
 
@@ -65,13 +64,13 @@ const ProductsScreen = ({ navigation }) => {
         }
       />
       <ImageBackground
-        style={{ width: "100%", height: 262 }}
+        style={{ width: "100%", height: 175 }}
         source={require("../assets/Start.png")}
       />
       <View
         style={{
           position: "absolute",
-          top: "10%",
+          top: "20%",
           left: "10%",
           right: 0,
           bottom: 0,
@@ -80,8 +79,21 @@ const ProductsScreen = ({ navigation }) => {
         }}
       >
         <View style={{ display: "flex", flexDirection: "column" }}>
-          <Text style={{ fontSize: 50, color: "white" }}>20% </Text>
-          <Text style={{ fontSize: 20, color: "white", opacity: 100 }}>
+          <Text
+            style={{
+              fontSize: 50,
+              color: "white",
+            }}
+          >
+            20%{" "}
+          </Text>
+          <Text
+            style={{
+              fontSize: 20,
+              color: "white",
+              opacity: 100,
+            }}
+          >
             Discount
           </Text>
         </View>
@@ -111,31 +123,49 @@ const ProductsScreen = ({ navigation }) => {
           }}
         />
       ) : (
-        <FlatList
-          data={searchResults}
-          style={{ marginHorizontal: 10 }}
-          numColumns={2}
-          keyExtractor={(item) => item.id}
-          renderItem={({ item }) => (
-            <TouchableOpacity
-              onPress={() =>
-                navigation.navigate("PreOrder", {
-                  name: item.name,
-                  weight: item.weight,
-                  price: item.price,
-                  img: item.product_img,
-                })
-              }
-            >
-              <ProductCard
-                name={item.name}
-                img={item.product_img}
-                price={item.price}
-                weight={item.weight}
-              />
-            </TouchableOpacity>
-          )}
-        />
+        <>
+          <FlatList
+            data={searchResults}
+            style={{ marginHorizontal: 10 }}
+            numColumns={2}
+            keyExtractor={(item) => item.id}
+            renderItem={({ item }) => (
+              <TouchableOpacity
+                onPress={() =>
+                  navigation.navigate("PreOrder", {
+                    name: item.name,
+                    weight: item.weight,
+                    price: item.price,
+                    img: item.product_img,
+                  })
+                }
+              >
+                <ProductCard
+                  name={item.name}
+                  img={item.product_img}
+                  price={item.price}
+                  weight={item.weight}
+                />
+              </TouchableOpacity>
+            )}
+          />
+          <View
+            style={{
+              display: "flex",
+              flexDirection: "row",
+              backgroundColor: "#D95500",
+              justifyContent: "space-around",
+              height: 76,
+            }}
+          >
+            <Text style={{ color: "white", fontSize: 25, marginVertical: 15 }}>
+              Sort By
+            </Text>
+            <Text style={{ color: "white", fontSize: 25, marginVertical: 15 }}>
+              Filter
+            </Text>
+          </View>
+        </>
       )}
     </View>
   );
