@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { Header } from "react-native-elements";
-import { EvilIcons } from "@expo/vector-icons";
 import SearchBar from "../Components/SearchBar";
 import { AntDesign } from "@expo/vector-icons";
 import {
@@ -118,12 +117,23 @@ const ProductsScreen = ({ navigation }) => {
           numColumns={2}
           keyExtractor={(item) => item.id}
           renderItem={({ item }) => (
-            <ProductCard
-              name={item.name}
-              img={item.product_img}
-              price={item.price}
-              weight={item.weight}
-            />
+            <TouchableOpacity
+              onPress={() =>
+                navigation.navigate("PreOrder", {
+                  name: item.name,
+                  weight: item.weight,
+                  price: item.price,
+                  img: item.product_img,
+                })
+              }
+            >
+              <ProductCard
+                name={item.name}
+                img={item.product_img}
+                price={item.price}
+                weight={item.weight}
+              />
+            </TouchableOpacity>
           )}
         />
       )}
