@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { Header } from "react-native-elements";
 import { EvilIcons } from "@expo/vector-icons";
-
+import SearchBar from "../Components/SearchBar";
+import { AntDesign } from "@expo/vector-icons";
 import {
   StyleSheet,
   Text,
@@ -12,9 +13,29 @@ import {
 } from "react-native";
 import axios from "axios";
 import CategoryCard from "../Components/CategoryCard";
+import ProductCard from "../Components/ProductCard";
 
 const ProductsScreen = ({ navigation }) => {
   const [category, setCategory] = useState([]);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [searchResults, setSearchResults] = useState([]);
+
+  console.log("Search Results Log");
+
+  const getSearchResults = async (searchparam) => {
+    const response = await axios.get(
+      `https://5bcce576cf2e850013874767.mockapi.io/task/categories`
+    );
+    let filteredResponse = response.data.filter(
+      (category) => category.name === searchparam
+    );
+    let newFilteredResponse = { ...filteredResponse };
+    newFilteredResponse = newFilteredResponse["0"].products;
+    console.log(newFilteredResponse);
+    //filteredResponse = filteredResponse.products;
+    setSearchResults(newFilteredResponse);
+  };
+
   const getCategories = async () => {
     const response = await axios.get(
       `https://5bcce576cf2e850013874767.mockapi.io/task/categories`
@@ -26,14 +47,23 @@ const ProductsScreen = ({ navigation }) => {
   useEffect(() => {
     getCategories();
   }, []);
+
   return (
     <View style={styles.container}>
       <Header
         backgroundColor="white"
         placement="right"
         leftComponent={{ icon: "menu", color: "#62A7D7", size: 34 }}
-        centerComponent={<EvilIcons name="search" size={34} color="#62A7D7" />}
-        rightComponent={<EvilIcons name="cart" size={34} color="#62A7D7" />}
+        centerComponent={
+          <SearchBar
+            searchTerm={searchTerm}
+            onTermChange={setSearchTerm}
+            onSearch={getSearchResults}
+          />
+        }
+        rightComponent={
+          <AntDesign name="shoppingcart" size={34} color="#62A7D7" />
+        }
       />
       <ImageBackground
         style={{ width: "100%", height: 262 }}
@@ -58,28 +88,45 @@ const ProductsScreen = ({ navigation }) => {
         </View>
       </View>
 
-      <FlatList
-        style={{ marginHorizontal: 40 }}
-        data={category}
-        numColumns={2}
-        keyExtractor={(item) => item.id}
-        renderItem={({ item }) => {
-          // console.log("new Line");
-          // console.log(item);
-          return (
-            <TouchableOpacity
-              onPress={() =>
-                navigation.navigate("Category", {
-                  img: item.category_img,
-                  products: item.products,
-                })
-              }
-            >
-              <CategoryCard image={item.category_img} name={item.name} />
-            </TouchableOpacity>
-          );
-        }}
-      />
+      {searchTerm.length == 0 ? (
+        <FlatList
+          style={{ marginHorizontal: 40 }}
+          data={category}
+          numColumns={2}
+          keyExtractor={(item) => item.id}
+          renderItem={({ item }) => {
+            // console.log("new Line");
+            // console.log(item);
+            return (
+              <TouchableOpacity
+                onPress={() =>
+                  navigation.navigate("Category", {
+                    img: item.category_img,
+                    products: item.products,
+                  })
+                }
+              >
+                <CategoryCard image={item.category_img} name={item.name} />
+              </TouchableOpacity>
+            );
+          }}
+        />
+      ) : (
+        <FlatList
+          data={searchResults}
+          style={{ marginHorizontal: 10 }}
+          numColumns={2}
+          keyExtractor={(item) => item.id}
+          renderItem={({ item }) => (
+            <ProductCard
+              name={item.name}
+              img={item.product_img}
+              price={item.price}
+              weight={item.weight}
+            />
+          )}
+        />
+      )}
     </View>
   );
 };
